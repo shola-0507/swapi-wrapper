@@ -15,7 +15,7 @@ exports.getPeople = async (req, res) => {
 
         if ("sortBy" in query) { 
             const sortBy = query.sortBy
-            const sortIn = query.sortIn ? query.sortIn : "desc" // 0 - ascending, 1- descending
+            const sortIn = query.sortIn ? query.sortIn : "asc"
             people = people.sort(sortResponse(sortBy, sortIn))
         }
 

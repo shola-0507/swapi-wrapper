@@ -29,18 +29,30 @@ const filter = (data= [], param, value) => {
 }
 
 const sortResponse = (prop, order= "desc") => (a, b) => {
-    let value_a
-    let value_b
     switch (prop) {
     case "release_date":
-        value_a = new Date(a[prop])
-        value_b = new Date(b[prop])
+        a = new Date(a[prop])
+        b = new Date(b[prop])
 
-        if (order === "desc") return value_b > value_a
-        return value_b < value_a
-    default:
         if (order === "desc") return b > a
         return b < a
+    case "height":
+        a = parseInt(a[prop])
+        b = parseInt(b[prop])
+        
+        if (isNaN(a)) a = Number.POSITIVE_INFINITY
+        if (isNaN(b)) b = Number.POSITIVE_INFINITY
+
+        if (order === "desc") {
+            return b - a
+        }
+        return a - b
+    default:
+        a = a[prop].toString().replace(/\s+/g,"").toLowerCase()
+        b = b[prop].toString().replace(/\s+/g,"").toLowerCase()
+        console.log(a, b)
+        if (order === "desc") return b.localeCompare(a)
+        return a.localeCompare(b)
     }
 }
 

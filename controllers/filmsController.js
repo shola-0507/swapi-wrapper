@@ -12,7 +12,6 @@ exports.getFilms = async (req, res) => {
         if (!films.length) return sendFailureResponse(res, "No film found", [], 404)
 
         const film_data = await Films.findAll()
-
         films = extractFields(films, ["episode_id", "title", "release_date", "opening_crawl"])
         films = attachCommentsCount(films, film_data)
         films = films.sort(sortResponse("release_date", "asc"))

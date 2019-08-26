@@ -8,7 +8,7 @@ const peopleController = require("../controllers/peopleController")
 router.get("/test", (req, res) => res.send("Hello!")) // simple route test to ensure nodejs is configured properly
 router.get("/films", filmsController.getFilms)
 
-router.post("/:id/comment/create", validationController.validateComments, commentsController.createComment)
+router.post("/film/:id/comments", validationController.validateComments, commentsController.createComment)
 router.get("/film/:id/comments", commentsController.getComments)
 router.get("/people", peopleController.getPeople)
 
