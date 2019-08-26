@@ -6,7 +6,6 @@ const { sendSuccessResponse, sendFailureResponse } = require("../logic/response"
 
 exports.getFilms = async (req, res) => {
     try {
-        const query = req.query
         let films = await retrieveData(FILMS)
         films = JSON.parse(films)
 
@@ -16,12 +15,7 @@ exports.getFilms = async (req, res) => {
 
         films = extractFields(films, ["episode_id", "title", "release_date", "opening_crawl"])
         films = attachCommentsCount(films, film_data)
-        
-        if ("sortBy" in query) {
-            const sortBy = query.sortBy
-            const sortIn = query.sortIn ? query.sortIn : "desc"
-            films = films.sort(sortResponse(sortBy, sortIn))
-        }
+        films = films.sort(sortResponse("release_date", "asc"))
 
         return sendSuccessResponse(res, "Success", films, 200)
     } catch (error) {
