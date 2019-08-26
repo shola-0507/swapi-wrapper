@@ -36,12 +36,11 @@ exports.createComment = async (req, res) => {
         let film = await checkDataExists(FILMS, "episode_id", id)
         if (!film.length) return sendFailureResponse(res, "Film not found", [], 404)
 
-        film = await Films.findAll({
+        film = await Films.findOrCreate({
             where: { id }
         }) 
         
-        if (film.length === 0) film = await Films.create({ id })
-        else film = film[0]["dataValues"]
+        film = film[0]["dataValues"]
         
         const comment = await Comments.create({
             film_id: id,

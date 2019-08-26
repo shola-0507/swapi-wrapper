@@ -44,9 +44,9 @@ const sortResponse = (prop, order= "desc") => (a, b) => {
         if (isNaN(b)) b = Number.POSITIVE_INFINITY
 
         if (order === "desc") {
-            return b - a
+            return a - b
         }
-        return a - b
+        return b - a
     default:
         a = a[prop].toString().replace(/\s+/g,"").toLowerCase()
         b = b[prop].toString().replace(/\s+/g,"").toLowerCase()
