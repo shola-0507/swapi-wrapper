@@ -20,6 +20,20 @@ const validate = (body, required) => {
     return errors
 }
 
+const extractFields = (films, fields= []) => {
+    const data = []
+    
+    films.forEach((film) => {
+        const new_obj = {}
+        fields.forEach((field) => {
+            new_obj[field] = film[field]
+        })
+        data.push(new_obj)
+    })
+
+    return data
+}
+
 const filter = (data= [], param, value) => {
     data = data.filter((obj) => {
         return obj[param] === value
@@ -109,6 +123,7 @@ module.exports = {
     retrieveData,
     fetchPaginatedData,
     sortResponse,
+    extractFields,
     filter,
     validate,
     fetchDataFromSwapi

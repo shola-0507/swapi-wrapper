@@ -1,7 +1,7 @@
 const Films = require("../models").Film
 const { FILMS } = require("../logic/constants")
-const { sortResponse, retrieveData } = require("../logic/helpers")
-const { extractFields, attachCommentsCount } = require("../logic/filmLogic")
+const { sortResponse, retrieveData, extractFields } = require("../logic/helpers")
+const { attachCommentsCount } = require("../logic/filmLogic")
 const { sendSuccessResponse, sendFailureResponse } = require("../logic/response")
 
 exports.getFilms = async (req, res) => {
@@ -22,4 +22,3 @@ exports.getFilms = async (req, res) => {
         return sendFailureResponse(res, "Something went wrong retriving the data: " + error.message)
     }
 }
-
