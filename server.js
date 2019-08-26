@@ -10,7 +10,7 @@ models.sequelize.sync().then(() => {
     console.log("Something went wrong with the database connection " + err.message)
 })
 
-cron.schedule("0 */5 * * * *", async () => {
+cron.schedule("0 0 */1 * * *", async () => {
     console.log("-- running cron job --")
     try {
         const films = await fetchAndSaveDataToRedis(FILMS)

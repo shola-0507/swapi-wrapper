@@ -72,6 +72,14 @@ const fetchAndSaveDataToRedis = async (type) => {
     return response
 }
 
+const checkDataExists = async (type, param, id) => {
+    let data = await retrieveData(type)
+    data = JSON.parse(data)
+    
+    data = filter(data, param, id)
+    return data
+}
+
 const saveDataToRedis = async (key, value) => {
     await redisClient.set(key, value)
 }
@@ -84,6 +92,7 @@ const getDataFromRedis = async (key) => {
 module.exports = {
     getDataFromRedis,
     saveDataToRedis,
+    checkDataExists,
     fetchAndSaveDataToRedis,
     retrieveData,
     fetchPaginatedData,

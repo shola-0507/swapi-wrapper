@@ -1,6 +1,6 @@
 const Comments = require("../models").Comment
 const Films = require("../models").Film
-const { fetchDataFromSwapi, sortResponse } = require("../logic/helpers")
+const { checkDataExists } = require("../logic/helpers")
 const { sendSuccessResponse, sendFailureResponse } = require("../logic/response")
 const { FILMS } = require("../logic/constants")
 
@@ -11,10 +11,14 @@ exports.getComments = async (req, res) => {
         let comments = await Comments.findAll({
             where: {
                 film_id: id
-            }
+            },
+            order: [
+                ["createdAt", "DESC"]
+            ]
         })
 
-        comments = comments.sort(sortResponse("createdAt"))
+        if (!comments.length) return sendFailureResponse(res, "No comment found", [], 404)
+
         sendSuccessResponse(res, "Comments retrived Successfully", comments)
     } catch (error) {
         sendFailureResponse(res, error.message)
@@ -24,24 +28,20 @@ exports.getComments = async (req, res) => {
 exports.createComment = async (req, res) => {
     try {
         const body = req.body
-        const id = req.params.id
+        const id = parseInt(req.params.id)
         const ip =  req.header("x-forwarded-for") || req.connection.remoteAddress
 
-        if (body.comment.length > 500) {
-            sendFailureResponse(res, "Comment should not be more than 500 characters")
-        }
+        if (body.comment.length > 500) return sendFailureResponse(res, "Comment should not be more than 500 characters")
+        
+        let film = await checkDataExists(FILMS, "episode_id", id)
+        if (!film.length) return sendFailureResponse(res, "Film not found", [], 404)
 
-        await fetchDataFromSwapi(FILMS + "/" + id)
-        let film = await Films.findAll({
+        film = await Films.findAll({
             where: { id }
         }) 
-        console.log(film)
         
-        if (film.length === 0) {
-            film = await Films.create({ id })
-        } else {
-            film = film[0]["dataValues"]
-        }
+        if (film.length === 0) film = await Films.create({ id })
+        else film = film[0]["dataValues"]
         
         const comment = await Comments.create({
             film_id: id,
@@ -53,8 +53,8 @@ exports.createComment = async (req, res) => {
             where: { id }
         })
 
-        sendSuccessResponse(res, "Comment posted Successfully", comment)
+        return sendSuccessResponse(res, "Comment posted Successfully", comment)
     } catch (error) {
-        sendFailureResponse(res, error.message)
+        return sendFailureResponse(res, error.message)
     }
 }

@@ -9,6 +9,8 @@ exports.getPeople = async (req, res) => {
         let people = await retrieveData(PEOPLE)
         people = JSON.parse(people)
         
+        if (!people.length) return sendFailureResponse(res, "No person found", [], 404)
+        
         if ("gender" in query) people = filter(people, "gender", query.gender)
 
         if ("sortBy" in query) { 
@@ -17,8 +19,8 @@ exports.getPeople = async (req, res) => {
             people = people.sort(sortResponse(sortBy, sortIn))
         }
 
-        people = insertMetaData(people)
-        return sendSuccessResponse(res, "Characters retrieved successfully", people)
+        const response = insertMetaData(people)
+        return sendSuccessResponse(res, "Characters retrieved successfully", response)
         
     } catch (error) {
         sendFailureResponse(res, "Something went wrong retrieving Characters", error.message)
