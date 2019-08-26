@@ -8,8 +8,9 @@ module.exports = {
         "host": process.env.DB_HOST,
         "dialect": "mysql",
         pool: {
-            maxConnections: 5,
-            maxIdleTime: 300000
+            max: 10,
+            min: 2,
+            idle: 300000
         }
     },
     "test": {
@@ -19,8 +20,9 @@ module.exports = {
         "host": process.env.DB_HOST,
         "dialect": "mysql",
         pool: {
-            maxConnections: 5,
-            maxIdleTime: 300000
+            max: 10,
+            min: 2,
+            idle: 300000
         }
     },
     "production": {
@@ -30,8 +32,9 @@ module.exports = {
         "host": process.env.DB_HOST,
         "dialect": "mysql",
         pool: {
-            maxConnections: 5,
-            maxIdleTime: 300000
+            max: 10,
+            min: 2,
+            idle: 30000
         }
     }
 }

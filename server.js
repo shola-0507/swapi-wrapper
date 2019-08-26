@@ -5,9 +5,9 @@ const { FILMS, PEOPLE } = require("./logic/constants")
 const models = require("./models")
 
 models.sequelize.sync().then(() => {
-    console.log("Database connected!")
+    console.log("Database migrated!")
 }).catch((err) => {
-    console.log("Something went wrong with the database connection " + err.message)
+    console.log("Something went wrong with the database migration " + err.message)
 })
 
 cron.schedule("0 0 */1 * * *", async () => {
