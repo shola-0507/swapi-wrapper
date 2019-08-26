@@ -50,7 +50,7 @@ const sortResponse = (prop, order= "desc") => (a, b) => {
     default:
         a = a[prop].toString().replace(/\s+/g,"").toLowerCase()
         b = b[prop].toString().replace(/\s+/g,"").toLowerCase()
-        console.log(a, b)
+        
         if (order === "desc") return b.localeCompare(a)
         return a.localeCompare(b)
     }
