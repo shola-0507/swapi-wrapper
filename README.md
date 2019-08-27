@@ -17,11 +17,12 @@ POST | api/v1/film/:id/comments | **id**: a Url parameter that represents the ep
 # Development and Testing
 
 For testing this project locally.
- - Enusre you have docker installed and running on your machine.
+ - Ensure you have docker installed and running on your machine.
  - Pull the master branch of the codebase
  - Convert the env.example file to .env
  - Update the Database configuration environment variables
  - Run *docker-compose up* in your terminal
+ - Visit localhost:5000/api/v1/test in your browser or postman
  
 To run test suite
   - Run *npm install*
