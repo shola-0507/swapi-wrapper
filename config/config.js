@@ -6,7 +6,7 @@ module.exports = {
         "password": process.env.DB_PASSWORD,
         "database": process.env.DB_DATABASE,
         "host": process.env.DB_HOST,
-        "dialect": "mysql",
+        "dialect": process.env.DB,
         pool: {
             max: 10,
             min: 2,
@@ -18,7 +18,7 @@ module.exports = {
         "password": process.env.DB_PASSWORD,
         "database": process.env.DB_DATABASE,
         "host": process.env.DB_HOST,
-        "dialect": "mysql",
+        "dialect": process.env.DB,
         pool: {
             max: 10,
             min: 2,
@@ -26,11 +26,11 @@ module.exports = {
         }
     },
     "production": {
-        "username": process.env.DB_USERNAME,
+        "url": process.env.DB_USERNAME,
         "password": process.env.DB_PASSWORD,
         "database": process.env.DB_DATABASE,
         "host": process.env.DB_HOST,
-        "dialect": "mysql",
+        "dialect": process.env.DB,
         pool: {
             max: 10,
             min: 2,
