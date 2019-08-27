@@ -88,6 +88,7 @@ const fetchPaginatedData = async (type) => {
 const retrieveData = async (type) => {
     let response = await getDataFromRedis(type)
     if (!response) return await fetchAndSaveDataToRedis(type)
+    response = JSON.parse(response)
     return response
 }
 
@@ -100,7 +101,6 @@ const fetchAndSaveDataToRedis = async (type) => {
 
 const checkDataExists = async (type, param, id) => {
     let data = await retrieveData(type)
-    data = JSON.parse(data)
     
     data = filter(data, param, id)
     return data

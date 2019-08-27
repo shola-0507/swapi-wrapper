@@ -20,3 +20,25 @@ exports.insertMetaData = (people = []) => {
 
     return response
 }
+
+exports.extractCharacterIds = (films, id) => {
+    let film = films.filter((obj) => {
+        return obj.episode_id === parseInt(id)
+    })
+    
+    let ids = film[0]["characters"].map((char) => {
+        char = char.toString()
+        return char.match(/\d+/g)[0]
+    })
+
+    return ids
+}
+
+
+exports.getCharacters = (all_people, charcter_ids = []) => {
+    let response = all_people.filter((person) => {
+        return charcter_ids.includes(person["url"].toString().match(/\d+/g)[0]) 
+    })
+
+    return response
+}

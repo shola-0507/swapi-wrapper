@@ -7,7 +7,6 @@ const { sendSuccessResponse, sendFailureResponse } = require("../logic/response"
 exports.getFilms = async (req, res) => {
     try {
         let films = await retrieveData(FILMS)
-        films = JSON.parse(films)
 
         if (!films.length) return sendFailureResponse(res, "No film found", [], 404)
 
