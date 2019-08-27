@@ -31,3 +31,13 @@ describe("GET /people", () => {
             .expect(200, done)
     })
 })
+
+// eslint-disable-next-line no-undef
+describe("GET /people", () => {
+    // eslint-disable-next-line no-undef
+    it("should return an error message if the film id record doesnt exist", (done) => {
+        request(app)
+            .get(app_url + "film" + 200 + "/people")
+            .expect(404, done)
+    })
+})

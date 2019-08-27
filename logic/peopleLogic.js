@@ -22,14 +22,17 @@ exports.insertMetaData = (people = []) => {
 }
 
 exports.extractCharacterIds = (films, id) => {
+    let ids= []
     let film = films.filter((obj) => {
         return obj.episode_id === parseInt(id)
     })
     
-    let ids = film[0]["characters"].map((char) => {
-        char = char.toString()
-        return char.match(/\d+/g)[0]
-    })
+    if (film.length) {
+        ids = film[0]["characters"].map((char) => {
+            char = char.toString()
+            return char.match(/\d+/g)[0]
+        })
+    }
 
     return ids
 }

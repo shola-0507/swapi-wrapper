@@ -32,13 +32,13 @@ exports.getFilmCharacters = async (req, res) => {
         const query = req.query
         let films = await retrieveData(FILMS)
         let all_people = await retrieveData(PEOPLE)
-
-        films = extractFields(films, ["episode_id", "characters"])
-
-        const charcter_ids = extractCharacterIds(films, episode_id)
-        let people = getCharacters(all_people, charcter_ids)
         
-        if (!people.length) return sendFailureResponse(res, "No character found", [], 404)
+        films = extractFields(films, ["episode_id", "characters"])
+        const character_ids = extractCharacterIds(films, episode_id)
+        
+        if (!character_ids.length) return sendFailureResponse(res, "No character found", [], 404)
+
+        let people = getCharacters(all_people, character_ids)
 
         if ("gender" in query) people = filter(people, "gender", query.gender)
 
