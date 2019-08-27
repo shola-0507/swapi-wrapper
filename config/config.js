@@ -31,6 +31,11 @@ module.exports = {
         "database": process.env.DB_DATABASE,
         "host": process.env.DB_HOST,
         "dialect": process.env.DB,
+        "dialectOptions":{
+            "ssl":{
+                "require": process.env.DB_SSL_REQUIRED
+            }
+        },
         pool: {
             max: 10,
             min: 2,
