@@ -9,15 +9,19 @@ let id = 1
 
 // eslint-disable-next-line no-undef
 describe("GET all /Comments", () => {
-    let comment, res, films
+    let comment, status, films
     // eslint-disable-next-line no-undef
     before( async () => {
         try {
-            const data = await request(app).get(app_url + "films")
-            films = JSON.parse(data.text.data)
+            const filmData = await request(app).get(app_url + "films")
+            films = JSON.parse(filmData.text)
             
-            res  = await request(app).post(app_url + "film/" + id + "/comments")
+            const commentData  = await request(app).post(app_url + "film/" + id + "/comments")
                 .type("json").send({ comment: "Heyyy Olushola" })
+            
+            status = commentData.status
+            comment = JSON.parse(commentData.text)
+
         } catch (error) {
             console.log(error.message)
         }   
@@ -25,29 +29,25 @@ describe("GET all /Comments", () => {
 
     // eslint-disable-next-line no-undef
     it("should insert a comment for a movie, if the movie id exists", (done) => {
-        expect(res.status).to.equal(200)
+        expect(status).to.equal(200)
         done()
     })
 
     // eslint-disable-next-line no-undef
     it("should contain the public IP address of the commenter", (done) => {
-        comment = JSON.parse(res.text)
-        comment = comment.data
-        expect(comment).to.have.have.own.property("user_id")
+        expect(comment.results).to.have.have.own.property("user_id")
         done()
     })
 
     // eslint-disable-next-line no-undef
     it("should increase the number of comments for the movie by one", (done) => {
-        let old_film_data = films.filter((film) => {
+        const old_film_data = films.results.filter((film) => {
             return film.episode_id === id
         })
 
-        request(app).get(app_url + "films").end((err, films) => {
-            films = JSON.parse(films.text)
-            films = films.data
-
-            films.forEach((film) => {
+        request(app).get(app_url + "films").end((err, data) => {
+            const films = JSON.parse(data.text)
+            films.results.forEach((film) => {
                 if(film.episode_id === id) {
                     expect(film.comment_count).to.equal(old_film_data[0]["comment_count"] + 1)
                 }
@@ -73,10 +73,9 @@ describe("GET all /Comments", () => {
 
     // eslint-disable-next-line no-undef
     it("should sort the comments for each film by created date", (done) => {
-        request(app).get(app_url + "film/" + id + "/comments").end((err, comments) => {
-            comments = JSON.parse(comments.text)
-            comments = comments.data
-            expect(comments).to.be.sortedBy("createdAt", {descending: true})
+        request(app).get(app_url + "film/" + id + "/comments").end((err, data) => {
+            const comments = JSON.parse(data.text)
+            expect(comments.results).to.be.sortedBy("createdAt", {descending: true})
             done()
         })
     })

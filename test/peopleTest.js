@@ -13,9 +13,8 @@ describe("GET /people", () => {
 
     // eslint-disable-next-line no-undef
     before(async () => {
-        people = await request(app).get(app_url + PEOPLE)
-        people = JSON.parse(people.text)
-        people = people.data
+        const data = await request(app).get(app_url + PEOPLE)
+        people = JSON.parse(data.text)
     })
 
     // eslint-disable-next-line no-undef
@@ -28,28 +27,28 @@ describe("GET /people", () => {
     // eslint-disable-next-line no-undef
     it("should contain the total number of people", (done) => {
         expect(people).to.have.have.own.property("count")
-        expect(people.count).to.be.at.least(1)
+        expect(people.count).to.equal(people.results.length)
         done()
     })
 
     // eslint-disable-next-line no-undef
     it("should contain the total height in centimeters", (done) => {
-        expect(people).to.have.have.own.property("totalHeight(Cm)")
-        expect(people["totalHeight(Cm)"]).to.be.at.least(1)
+        expect(people).to.have.have.own.property("meta")
+        expect(people.meta).to.have.have.own.property("totalHeight(Cm)")
         done()
     }) 
 
     // eslint-disable-next-line no-undef
     it("should contain the total height in feet", (done) => {
-        expect(people).to.have.have.own.property("totalHeight(Ft)")
-        expect(people["totalHeight(Ft)"]).to.be.at.least(1)
+        expect(people).to.have.have.own.property("meta")
+        expect(people.meta).to.have.have.own.property("totalHeight(Ft)")
         done()
     }) 
 
     // eslint-disable-next-line no-undef
     it("should contain the total height in inches", (done) => {
-        expect(people).to.have.have.own.property("totalHeight(In)")
-        expect(people["totalHeight(In)"]).to.be.at.least(1)
+        expect(people).to.have.have.own.property("meta")
+        expect(people.meta).to.have.have.own.property("totalHeight(In)")
         done()
     }) 
 })
@@ -60,9 +59,8 @@ describe("GET /people filtered by gender (female) and sorted by name", () => {
 
     // eslint-disable-next-line no-undef
     before(async () => {
-        people = await request(app).get(app_url + PEOPLE + "?gender=female&sortBy=name&sortIn=asc")
-        people = JSON.parse(people.text)
-        people = people.data
+        const data = await request(app).get(app_url + PEOPLE + "?gender=female&sortBy=name&sortIn=asc")
+        people = JSON.parse(data.text)
     })
 
     // eslint-disable-next-line no-undef
@@ -97,22 +95,22 @@ describe("GET /people filtered by gender (female) and sorted by name", () => {
 
     // eslint-disable-next-line no-undef
     it("should contain the total height in centimeters", (done) => {
-        expect(people).to.have.have.own.property("totalHeight(Cm)")
-        expect(people["totalHeight(Cm)"]).to.be.at.least(1)
+        expect(people).to.have.have.own.property("meta")
+        expect(people.meta).to.have.have.own.property("totalHeight(Cm)")
         done()
     }) 
 
     // eslint-disable-next-line no-undef
     it("should contain the total height in feet", (done) => {
-        expect(people).to.have.have.own.property("totalHeight(Ft)")
-        expect(people["totalHeight(Ft)"]).to.be.at.least(1)
+        expect(people).to.have.have.own.property("meta")
+        expect(people.meta).to.have.have.own.property("totalHeight(Ft)")
         done()
     }) 
 
     // eslint-disable-next-line no-undef
     it("should contain the total height in inches", (done) => {
-        expect(people).to.have.have.own.property("totalHeight(In)")
-        expect(people["totalHeight(In)"]).to.be.at.least(1)
+        expect(people).to.have.have.own.property("meta")
+        expect(people.meta).to.have.have.own.property("totalHeight(In)")
         done()
     }) 
 })
@@ -123,9 +121,8 @@ describe("GET all male characters in film with id=1 sorted by height in ascendin
 
     // eslint-disable-next-line no-undef
     before(async () => {
-        people = await request(app).get(app_url + "film/1/" + PEOPLE + "?gender=male&sortBy=height&sortIn=asc")
-        people = JSON.parse(people.text)
-        people = people.data
+        const data = await request(app).get(app_url + "/people?episodeId=1&gender=male&sortBy=height&sortIn=asc")
+        people = JSON.parse(data.text)
     })
 
     // eslint-disable-next-line no-undef
@@ -156,30 +153,23 @@ describe("GET all male characters in film with id=1 sorted by height in ascendin
     })
 
     // eslint-disable-next-line no-undef
-    it("should contain the total number of people", (done) => {
-        expect(people).to.have.have.own.property("count")
-        expect(people.count).to.equal(people.results.length)
-        done()
-    })
-
-    // eslint-disable-next-line no-undef
     it("should contain the total height in centimeters", (done) => {
-        expect(people).to.have.have.own.property("totalHeight(Cm)")
-        expect(people["totalHeight(Cm)"]).to.be.at.least(1)
+        expect(people).to.have.have.own.property("meta")
+        expect(people.meta).to.have.have.own.property("totalHeight(Cm)")
         done()
     }) 
 
     // eslint-disable-next-line no-undef
     it("should contain the total height in feet", (done) => {
-        expect(people).to.have.have.own.property("totalHeight(Ft)")
-        expect(people["totalHeight(Ft)"]).to.be.at.least(1)
+        expect(people).to.have.have.own.property("meta")
+        expect(people.meta).to.have.have.own.property("totalHeight(Ft)")
         done()
     }) 
 
     // eslint-disable-next-line no-undef
     it("should contain the total height in inches", (done) => {
-        expect(people).to.have.have.own.property("totalHeight(In)")
-        expect(people["totalHeight(In)"]).to.be.at.least(1)
+        expect(people).to.have.have.own.property("meta")
+        expect(people.meta).to.have.have.own.property("totalHeight(In)")
         done()
     }) 
 })
