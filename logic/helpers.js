@@ -20,18 +20,22 @@ const validate = (body, required) => {
     return errors
 }
 
-const extractFields = (films, fields= []) => {
-    const data = []
+const extractFields = (data, fields= []) => {
+    const response = []
     
-    films.forEach((film) => {
+    if (!fields.length) {
+        return 
+    }
+
+    data.forEach((film) => {
         const new_obj = {}
         fields.forEach((field) => {
             new_obj[field] = film[field]
         })
-        data.push(new_obj)
+        response.push(new_obj)
     })
 
-    return data
+    return response
 }
 
 const filterBy = (param, value) => (obj= {}) => {
@@ -84,15 +88,15 @@ const fetchPaginatedData = async (type) => {
 }
 
 const retrieveData = async (type) => {
-    let response = await getDataFromRedis(type)
-    if (!response) return await fetchAndSaveDataToRedis(type)
-    response = JSON.parse(response)
+    const data = await getDataFromRedis(type)
+    if (!data) return await fetchAndSaveDataToRedis(type)
+    const response = JSON.parse(data)
     return response
 }
 
 const fetchAndSaveDataToRedis = async (type) => {
-    let response = await fetchPaginatedData(type)
-    response = JSON.stringify(response)
+    const data = await fetchPaginatedData(type)
+    const response = JSON.stringify(data)
     await saveDataToRedis(type, response)
     return response
 }

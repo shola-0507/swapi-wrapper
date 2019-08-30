@@ -13,9 +13,9 @@ describe("GET all /Comments", () => {
     // eslint-disable-next-line no-undef
     before( async () => {
         try {
-            films = await request(app).get(app_url + "films")
-            films = JSON.parse(films.text)
-            films = films.data
+            const data = await request(app).get(app_url + "films")
+            films = JSON.parse(data.text.data)
+            
             res  = await request(app).post(app_url + "film/" + id + "/comments")
                 .type("json").send({ comment: "Heyyy Olushola" })
         } catch (error) {
