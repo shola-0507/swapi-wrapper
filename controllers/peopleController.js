@@ -9,7 +9,7 @@ exports.getCharacters = async (req, res) => {
         const sortBy = query.sortBy
         const sortIn = query.sortIn ? query.sortIn : "desc"
         const gender = query.gender
-        const movieId = query.movieId
+        const movieId = query.episodeId
         let data = await retrieveData(PEOPLE)
         
         if (!data.length) return sendFailureResponse(res, "No person found", [], 404)
