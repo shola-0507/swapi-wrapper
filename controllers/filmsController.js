@@ -6,16 +6,15 @@ const { sendSuccessResponse, sendFailureResponse } = require("../logic/response"
 
 exports.getFilms = async (req, res) => {
     try {
-        let films = await retrieveData(FILMS)
-
+        const films = await retrieveData(FILMS)
         if (!films.length) return sendFailureResponse(res, "No film found", [], 404)
 
         const film_data = await Films.findAll()
-        films = extractFields(films, ["episode_id", "title", "release_date", "opening_crawl"])
-        films = attachCommentsCount(films, film_data)
-        films = films.sort(sortResponse("release_date", "asc"))
+        const trimmed_films = extractFields(films, ["episode_id", "title", "release_date", "opening_crawl"])
+        const films_with_comments = attachCommentsCount(trimmed_films, film_data)
+        const response = films_with_comments.sort(sortResponse("release_date", "asc"))
 
-        return sendSuccessResponse(res, "Success", films, 200)
+        return sendSuccessResponse(res, "Success", response, 200)
     } catch (error) {
         console.log(error.message)
         return sendFailureResponse(res, "Something went wrong retriving the data: " + error.message)

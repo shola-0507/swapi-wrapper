@@ -10,8 +10,7 @@ router.get("/films", filmsController.getFilms)
 
 router.post("/film/:id/comments", validationController.validateComments, commentsController.createComment)
 router.get("/film/:id/comments", commentsController.getComments)
-router.get("/film/:id/people", peopleController.getFilmCharacters)
 
-router.get("/people", peopleController.getAllCharacters)
+router.get("/people", peopleController.getCharacters)
 
 module.exports = router

@@ -1,5 +1,5 @@
-exports.insertMetaData = (people = []) => {
-    const response = {}
+exports.getMetaData = (people = []) => {
+    const metaData = {}
     let cm = 0, ft= 0, inches = 0
 
     people.forEach((person) => {
@@ -12,13 +12,11 @@ exports.insertMetaData = (people = []) => {
         }
     })
 
-    response["count"] = people.length
-    response["totalHeight(Cm)"] = cm
-    response["totalHeight(Ft)"] = ft
-    response["totalHeight(In)"] = inches
-    response["results"] = people
+    metaData["totalHeight(Cm)"] = cm
+    metaData["totalHeight(Ft)"] = ft
+    metaData["totalHeight(In)"] = inches
 
-    return response
+    return metaData
 }
 
 exports.extractCharacterIds = (films, id) => {

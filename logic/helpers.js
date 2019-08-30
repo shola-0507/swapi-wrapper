@@ -34,12 +34,8 @@ const extractFields = (films, fields= []) => {
     return data
 }
 
-const filter = (data= [], param, value) => {
-    data = data.filter((obj) => {
-        return obj[param] === value
-    })
-
-    return data
+const filterBy = (param, value) => (obj= {}) => {
+    return obj[param] === value
 }
 
 const sortResponse = (prop, order= "desc") => (a, b) => {
@@ -53,11 +49,15 @@ const sortResponse = (prop, order= "desc") => (a, b) => {
     case "height":
         a = parseInt(a[prop])
         b = parseInt(b[prop])
-        
+    
+        if (order === "desc") {
+            if (isNaN(a)) a = Number.NEGATIVE_INFINITY
+            if (isNaN(b)) b = Number.NEGATIVE_INFINITY
+            return b - a
+        }
+
         if (isNaN(a)) a = Number.POSITIVE_INFINITY
         if (isNaN(b)) b = Number.POSITIVE_INFINITY
-
-        if (order === "desc") return b - a
         return a - b
     default:
         a = a[prop].toString().replace(/\s+/g,"").toLowerCase()
@@ -98,10 +98,10 @@ const fetchAndSaveDataToRedis = async (type) => {
 }
 
 const checkDataExists = async (type, param, id) => {
-    let data = await retrieveData(type)
+    const data = await retrieveData(type)
     
-    data = filter(data, param, id)
-    return data
+    const response = data.filter(filterBy(param, id))
+    return response
 }
 
 const saveDataToRedis = async (key, value) => {
@@ -122,7 +122,7 @@ module.exports = {
     fetchPaginatedData,
     sortResponse,
     extractFields,
-    filter,
+    filterBy,
     validate,
     fetchDataFromSwapi
 }

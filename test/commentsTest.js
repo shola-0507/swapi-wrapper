@@ -1,4 +1,3 @@
-const { COMMENTS, FILMS } = require("../logic/constants")
 const request = require("supertest")
 const chai = require("chai")
 const expect = chai.expect
@@ -14,10 +13,10 @@ describe("GET all /Comments", () => {
     // eslint-disable-next-line no-undef
     before( async () => {
         try {
-            films = await request(app).get(app_url + FILMS)
+            films = await request(app).get(app_url + "films")
             films = JSON.parse(films.text)
             films = films.data
-            res  = await request(app).post(app_url + "film/" + id + "/" + COMMENTS)
+            res  = await request(app).post(app_url + "film/" + id + "/comments")
                 .type("json").send({ comment: "Heyyy Olushola" })
         } catch (error) {
             console.log(error.message)
@@ -44,7 +43,7 @@ describe("GET all /Comments", () => {
             return film.episode_id === id
         })
 
-        request(app).get(app_url + FILMS).end((err, films) => {
+        request(app).get(app_url + "films").end((err, films) => {
             films = JSON.parse(films.text)
             films = films.data
 
@@ -61,7 +60,7 @@ describe("GET all /Comments", () => {
     it("should return a 404 status code, if the movie id isnt associated with any movie", (done) => {
         let id = 30
         request(app)
-            .post(app_url + "film/" + id + "/" + COMMENTS)
+            .post(app_url + "film/" + id + "/comments")
             .type("json")
             .send({
                 comment: "Heyyy Olushola"
@@ -74,7 +73,7 @@ describe("GET all /Comments", () => {
 
     // eslint-disable-next-line no-undef
     it("should sort the comments for each film by created date", (done) => {
-        request(app).get(app_url + "film/" + id + "/" + COMMENTS).end((err, comments) => {
+        request(app).get(app_url + "film/" + id + "/comments").end((err, comments) => {
             comments = JSON.parse(comments.text)
             comments = comments.data
             expect(comments).to.be.sortedBy("createdAt", {descending: true})
