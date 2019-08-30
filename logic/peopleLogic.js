@@ -21,9 +21,12 @@ exports.getMetaData = (people = []) => {
 
 exports.extractCharacterIds = (films, id) => {
     let ids= []
+    const film = films.filter((obj) => {
+        return obj.episode_id === parseInt(id)
+    })
     
-    if (films.length) {
-        ids = films[id]["characters"].map((char) => {
+    if (film.length) {
+        ids = film[0]["characters"].map((char) => {
             char = char.toString()
             return char.match(/\d+/g)[0]
         })
