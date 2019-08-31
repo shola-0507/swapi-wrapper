@@ -20,24 +20,6 @@ const validate = (body, required) => {
     return errors
 }
 
-const extractFields = (data, fields= []) => {
-    const response = []
-    
-    if (!fields.length) {
-        return 
-    }
-
-    data.forEach((film) => {
-        const new_obj = {}
-        fields.forEach((field) => {
-            new_obj[field] = film[field]
-        })
-        response.push(new_obj)
-    })
-
-    return response
-}
-
 const filterBy = (param, value) => (obj= {}) => {
     return obj[param] === value
 }
@@ -98,12 +80,11 @@ const fetchAndSaveDataToRedis = async (type) => {
     const data = await fetchPaginatedData(type)
     const response = JSON.stringify(data)
     await saveDataToRedis(type, response)
-    return response
+    return JSON.parse(response)
 }
 
 const checkDataExists = async (type, param, id) => {
     const data = await retrieveData(type)
-    
     const response = data.filter(filterBy(param, id))
     return response
 }
@@ -125,7 +106,6 @@ module.exports = {
     retrieveData,
     fetchPaginatedData,
     sortResponse,
-    extractFields,
     filterBy,
     validate,
     fetchDataFromSwapi

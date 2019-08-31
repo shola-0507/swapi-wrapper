@@ -5,7 +5,7 @@
     "main": "server.js",
     "scripts": {
         "test": "mocha --timeout 10000",
-        "start": "nodemon server.js --exec babel-node --"
+        "start": "nodemon server.js"
     },
     "author": "Olushola Karokatose",
     "license": "ISC",
@@ -29,6 +29,7 @@
         "cheerio": "^1.0.0-rc.3",
         "eslint": "^6.2.1",
         "mocha": "^6.2.0",
+        "nodemon": "^1.19.1",
         "supertest": "^4.0.2"
     }
 }

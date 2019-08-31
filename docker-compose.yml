@@ -1,22 +1,44 @@
 version: "3"
 
 services:
-  backend: 
-    container_name: backend
+  postgres-db:
+    container_name: postgres-db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: swapi
+      POSTGRES_PASSWORD: swapi1234
+      POSTGRES_DB: swapi
+    ports:
+      - "5432:5432"
+
+  redis-swapi:
+    container_name: redis-swapi
+    image: redis
+    restart: always
+    ports:
+      - "6380:6379"
+
+  swapi: 
+    container_name: swapi
     restart: always
     build: .
-    env_file: 
-      - .env
-    ports:
-      - "5000:5000"
-    expose:
-      - 5000
-    links:
-      - redis-server
-  
-  redis-server:
-    container_name: redis-server
-    image: redis
-    ports:
-      - "6379:6379"
+    environment: 
+      DB: postgres
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_DATABASE: swapi
+      DB_USERNAME: swapi
+      DB_PASSWORD: swapi1234
 
+      REDIS_URL: redis://redis-swapi:6379
+      NODE_ENV: development
+      PORT: 9000
+      SWAPI_URL: https://swapi.co/api/
+    ports:
+      - "9000:9000"
+    expose:
+      - 9000
+    links:
+      - redis-swapi
+      - postgres-db

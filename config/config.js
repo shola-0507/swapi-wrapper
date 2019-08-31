@@ -33,7 +33,7 @@ module.exports = {
         "dialect": process.env.DB,
         "dialectOptions":{
             "ssl":{
-                "require": process.env.DB_SSL_REQUIRED
+                "require": true
             }
         },
         pool: {

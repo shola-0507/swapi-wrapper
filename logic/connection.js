@@ -9,7 +9,7 @@ redisClient.on("connect", () => {
 })
 
 redisClient.on("error", (err) => {
-    console.log("Something went wrong wuth the redis connection " + err.message)
+    console.log("Something went wrong with the redis connection " + err.message)
 })
 
 module.exports = redisClient
