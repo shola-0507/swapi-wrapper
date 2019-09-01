@@ -1,10 +1,8 @@
-exports.sendSuccessResponse = (res, message= "Success", results= [], status= 200, meta={}, next= null, previous=null) => {
+exports.sendSuccessResponse = (res, message= "Success", results= [], status= 200, meta=null) => {
     return res.status(status).json({
         success: true,
         message,
         count: results.length,
-        previous,
-        next,
         meta,
         results
     })
