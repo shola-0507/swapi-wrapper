@@ -10,7 +10,7 @@ exports.attachCommentsCount = (films, metadata) => {
             film_data.forEach((data) => {
                 if (data.film_id === film.episode_id) {
                     console.log(data)
-                    film["comment_count"] = data.comment_count
+                    film["comment_count"] = parseInt(data.comment_count)
                 }
             })
         } else {
