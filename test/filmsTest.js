@@ -1,4 +1,3 @@
-const { FILMS } = require("../logic/constants")
 const request = require("supertest")
 const { expect } = require("chai")
 const app = require("../server")
@@ -9,7 +8,7 @@ describe("GET /films", () => {
     let films
     // eslint-disable-next-line no-undef
     before(async () => {
-        const data = await request(app).get(app_url + FILMS)
+        const data = await request(app).get(app_url + "films")
         films = JSON.parse(data.text)
     })
 

@@ -16,7 +16,7 @@ describe("GET all /Comments", () => {
             const filmData = await request(app).get(app_url + "films")
             films = JSON.parse(filmData.text)
             
-            const commentData  = await request(app).post(app_url + "film/" + id + "/comments")
+            const commentData  = await request(app).post(app_url + "films/" + id + "/comments")
                 .type("json").send({ comment: "Heyyy Olushola" })
             
             status = commentData.status
@@ -60,7 +60,7 @@ describe("GET all /Comments", () => {
     it("should return a 404 status code, if the movie id isnt associated with any movie", (done) => {
         let id = 30
         request(app)
-            .post(app_url + "film/" + id + "/comments")
+            .post(app_url + "films/" + id + "/comments")
             .type("json")
             .send({
                 comment: "Heyyy Olushola"
@@ -73,7 +73,7 @@ describe("GET all /Comments", () => {
 
     // eslint-disable-next-line no-undef
     it("should sort the comments for each film by created date", (done) => {
-        request(app).get(app_url + "film/" + id + "/comments").end((err, data) => {
+        request(app).get(app_url + "films/" + id + "/comments").end((err, data) => {
             const comments = JSON.parse(data.text)
             expect(comments.results).to.be.sortedBy("createdAt", {descending: true})
             done()

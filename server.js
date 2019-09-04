@@ -1,26 +1,10 @@
 require("dotenv").config() // configure environment variables
-const cron = require("node-cron") //to configure cron jobs
-const { fetchAndSaveDataToRedis } = require("./logic/helpers")
-const { FILMS, PEOPLE } = require("./logic/constants")
 const models = require("./models")
 
 models.sequelize.sync().then(() => {
     console.log("Database migrated!")
 }).catch((err) => {
     console.log("Something went wrong with the database migration " + err.message)
-})
-
-cron.schedule("0 0 */1 * * *", async () => {
-    console.log("-- running cron job --")
-    try {
-        const films = await fetchAndSaveDataToRedis(FILMS)
-        const people = await fetchAndSaveDataToRedis(PEOPLE)
-
-        console.log({ films, people })
-        console.log("-- cron job completed--")
-    } catch (error) {
-        console.log("something went wrong send data to redis..." + error.message)
-    }
 })
 
 const api = require("./api")

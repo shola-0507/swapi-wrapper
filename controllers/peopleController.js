@@ -12,13 +12,13 @@ exports.getCharacters = async (req, res) => {
         const movieId = query.episodeId
         let data = await retrieveData(PEOPLE)
         
-        if (!data.length) return sendFailureResponse(res, "No person found", [], 404)
+        if (!data.length) return sendSuccessResponse(res, "No character found")
 
         if (movieId) {
             const filmData = await retrieveData(FILMS)
             const character_ids = extractCharacterIds(filmData, movieId)
             
-            if (!character_ids.length) return sendFailureResponse(res, "No character found", [], 404)
+            if (!character_ids.length) return sendSuccessResponse(res, "No character found")
             data = getCharacters(data, character_ids)
         }
 

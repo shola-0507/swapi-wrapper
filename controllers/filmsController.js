@@ -7,7 +7,7 @@ const { sendSuccessResponse, sendFailureResponse } = require("../logic/response"
 exports.getFilms = async (req, res) => {
     try {
         const films = await retrieveData(FILMS)
-        if (!films.length) return sendFailureResponse(res, "No film found", [], 404)
+        if (!films.length) return sendSuccessResponse(res, "No film found")
 
         const film_data = await Films.findAll()
         const films_with_comments = attachCommentsCount(films, film_data)
@@ -15,7 +15,6 @@ exports.getFilms = async (req, res) => {
 
         return sendSuccessResponse(res, "Success", response, 200)
     } catch (error) {
-        console.log(error.message)
         return sendFailureResponse(res, "Something went wrong retriving the data: " + error.message)
     }
 }
