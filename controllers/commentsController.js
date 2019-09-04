@@ -1,7 +1,5 @@
 const Comments = require("../models").Comment
-const Films = require("../models").Film
 const { checkDataExists } = require("../logic/helpers")
-const { addFilmToDatabase } = require("../logic/filmLogic")
 const { sendSuccessResponse, sendFailureResponse } = require("../logic/response")
 const { FILMS } = require("../logic/constants")
 
@@ -33,18 +31,14 @@ exports.createComment = async (req, res) => {
         if (body.comment.length > 500) return sendFailureResponse(res, "Comment should not be more than 500 characters", [], 400)
         
         const checkFilmExists = await checkDataExists(FILMS, "episode_id", film_id)
-        if (!checkFilmExists.length) return sendSuccessResponse(res, "No comment found")
+        if (!checkFilmExists.length) return sendSuccessResponse(res, "Film doesn't exist")
 
-        const film = await addFilmToDatabase(film_id)
         const comment = await Comments.create({
             film_id: film_id,
             comment: body.comment,
             user_id: ip
         })
 
-        await Films.update({ comment_count: film.comment_count + 1 }, {
-            where: { id: film_id }
-        })
         return sendSuccessResponse(res, "Comment posted Successfully", comment)
     } catch (error) {
         return sendFailureResponse(res, error.message)

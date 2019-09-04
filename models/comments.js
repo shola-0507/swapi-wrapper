@@ -6,11 +6,5 @@ module.exports = (sequelize, DataTypes) => {
         comment: DataTypes.STRING(500)
     }, {})
     
-    Comment.associate = function(models) {
-        Comment.belongsTo(models.Film, {
-            foreignKey: "film_id",
-            onDELETE: "CASCADE"
-        })
-    }
     return Comment
 }

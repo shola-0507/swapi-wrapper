@@ -57,21 +57,6 @@ describe("GET all /Comments", () => {
     })
 
     // eslint-disable-next-line no-undef
-    it("should return a 404 status code, if the movie id isnt associated with any movie", (done) => {
-        let id = 30
-        request(app)
-            .post(app_url + "films/" + id + "/comments")
-            .type("json")
-            .send({
-                comment: "Heyyy Olushola"
-            })
-            .end((err, res) => {
-                expect(res.status).to.equal(404)
-                done()
-            })
-    })
-
-    // eslint-disable-next-line no-undef
     it("should sort the comments for each film by created date", (done) => {
         request(app).get(app_url + "films/" + id + "/comments").end((err, data) => {
             const comments = JSON.parse(data.text)

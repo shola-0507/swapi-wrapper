@@ -10,14 +10,7 @@ module.exports = {
             },
             film_id: {
                 allowNull: false,
-                type: Sequelize.INTEGER,
-                onDelete: "CASCADE",
-                onUpdate: "CASCADE",
-                references: {
-                    model: "Films",
-                    key: "id",
-                    as: "film_id"
-                }
+                type: Sequelize.INTEGER
             },
             user_id: {
                 allowNull: false,
