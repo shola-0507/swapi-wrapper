@@ -9,13 +9,10 @@ let id = 1
 
 // eslint-disable-next-line no-undef
 describe("GET all /Comments", () => {
-    let comment, status, films
+    let comment, status
     // eslint-disable-next-line no-undef
     before( async () => {
         try {
-            const filmData = await request(app).get(app_url + "films")
-            films = JSON.parse(filmData.text)
-            
             const commentData  = await request(app).post(app_url + "films/" + id + "/comments")
                 .type("json").send({ comment: "Heyyy Olushola" })
             
@@ -37,23 +34,6 @@ describe("GET all /Comments", () => {
     it("should contain the public IP address of the commenter", (done) => {
         expect(comment.results).to.have.have.own.property("user_id")
         done()
-    })
-
-    // eslint-disable-next-line no-undef
-    it("should increase the number of comments for the movie by one", (done) => {
-        const old_film_data = films.results.filter((film) => {
-            return film.episode_id === id
-        })
-
-        request(app).get(app_url + "films").end((err, data) => {
-            const films = JSON.parse(data.text)
-            films.results.forEach((film) => {
-                if(film.episode_id === id) {
-                    expect(film.comment_count).to.equal(old_film_data[0]["comment_count"] + 1)
-                }
-            })
-            done()
-        })
     })
 
     // eslint-disable-next-line no-undef
