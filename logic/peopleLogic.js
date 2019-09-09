@@ -1,20 +1,18 @@
 exports.getMetaData = (people = []) => {
     const metaData = {}
-    let cm = 0, ft= 0, inches = 0
+    let cm = 0
 
     people.forEach((person) => {
         let _cm = parseInt(person.height)
-
-        if (!isNaN(_cm)) {
-            cm = cm + _cm
-            ft = ft + Math.ceil(parseFloat((_cm / 30.48).toFixed(2)))
-            inches = inches + parseFloat((_cm / 2.54).toFixed(2))
-        }
+        if (!isNaN(_cm)) cm = cm + _cm
     })
 
+    const total_height_in_inches = parseFloat(((cm / 30.48) * 12))
+    const ft = Math.floor(parseFloat(total_height_in_inches / 12))
+    const inches = parseFloat((total_height_in_inches % 12)).toFixed(2)
+
     metaData["totalHeight(Cm)"] = cm
-    metaData["totalHeight(Ft)"] = ft
-    metaData["totalHeight(In)"] = inches
+    metaData["totalHeight(Ft/In)"] = `${ft}ft and ${inches}inches`
 
     return metaData
 }
@@ -34,7 +32,6 @@ exports.extractCharacterIds = (films, id) => {
 
     return ids
 }
-
 
 exports.getCharacters = (all_people, charcter_ids = []) => {
     const response = all_people.filter((person) => {

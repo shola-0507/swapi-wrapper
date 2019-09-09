@@ -41,14 +41,7 @@ describe("GET /people", () => {
     // eslint-disable-next-line no-undef
     it("should contain the total height in feet", (done) => {
         expect(people).to.have.have.own.property("meta")
-        expect(people.meta).to.have.have.own.property("totalHeight(Ft)")
-        done()
-    }) 
-
-    // eslint-disable-next-line no-undef
-    it("should contain the total height in inches", (done) => {
-        expect(people).to.have.have.own.property("meta")
-        expect(people.meta).to.have.have.own.property("totalHeight(In)")
+        expect(people.meta).to.have.have.own.property("totalHeight(Ft/In)")
         done()
     }) 
 })
@@ -103,16 +96,9 @@ describe("GET /people filtered by gender (female) and sorted by name", () => {
     // eslint-disable-next-line no-undef
     it("should contain the total height in feet", (done) => {
         expect(people).to.have.have.own.property("meta")
-        expect(people.meta).to.have.have.own.property("totalHeight(Ft)")
+        expect(people.meta).to.have.have.own.property("totalHeight(Ft/In)")
         done()
-    }) 
-
-    // eslint-disable-next-line no-undef
-    it("should contain the total height in inches", (done) => {
-        expect(people).to.have.have.own.property("meta")
-        expect(people.meta).to.have.have.own.property("totalHeight(In)")
-        done()
-    }) 
+    })
 })
 
 //eslint-disable-next-line no-undef
@@ -162,14 +148,7 @@ describe("GET all male characters in film with id=1 sorted by height in ascendin
     // eslint-disable-next-line no-undef
     it("should contain the total height in feet", (done) => {
         expect(people).to.have.have.own.property("meta")
-        expect(people.meta).to.have.have.own.property("totalHeight(Ft)")
-        done()
-    }) 
-
-    // eslint-disable-next-line no-undef
-    it("should contain the total height in inches", (done) => {
-        expect(people).to.have.have.own.property("meta")
-        expect(people.meta).to.have.have.own.property("totalHeight(In)")
+        expect(people.meta).to.have.have.own.property("totalHeight(Ft/In)")
         done()
     }) 
 })
