@@ -18,7 +18,7 @@ exports.getComments = async (req, res) => {
         if (!comments.length) return sendSuccessResponse(res, "No comment found")
         return sendSuccessResponse(res, "Comments retrived Successfully", comments)
     } catch (error) {
-        return sendFailureResponse(res, error.message)
+        return sendFailureResponse(res, "Something went wrong retriving the comments. Please try again later.")
     } 
 }
 
@@ -41,6 +41,6 @@ exports.createComment = async (req, res) => {
 
         return sendSuccessResponse(res, "Comment posted Successfully", comment)
     } catch (error) {
-        return sendFailureResponse(res, error.message)
+        return sendFailureResponse(res, "Something went wrong posting the comment. Please try again later.")
     }
 }

@@ -20,6 +20,6 @@ exports.getFilms = async (req, res) => {
 
         return sendSuccessResponse(res, "Success", response, 200)
     } catch (error) {
-        return sendFailureResponse(res, "Something went wrong retriving the data: " + error.message)
+        return sendFailureResponse(res, "Something went wrong retriving the films. Please try again later.")
     }
 }
