@@ -28,6 +28,7 @@ exports.getCharacters = async (req, res) => {
 
         return sendSuccessResponse(res, "Characters retrieved successfully", data, 200, meta)
     } catch (error) {
+        console.log(error.message)
         return sendFailureResponse(res, "Something went wrong retriving the characters. Please try again later.")
     }
 }

@@ -12,7 +12,10 @@ exports.getMetaData = (people = []) => {
     const inches = parseFloat((total_height_in_inches % 12)).toFixed(2)
 
     metaData["totalHeight(Cm)"] = cm
-    metaData["totalHeight(Ft/In)"] = `${ft}ft and ${inches}inches`
+    metaData["totalHeight(Ft/In)"] = {
+        ft,
+        inches
+    }
 
     return metaData
 }
